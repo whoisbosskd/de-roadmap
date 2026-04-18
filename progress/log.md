@@ -69,6 +69,20 @@ Log each session here. Be brief — what you did, what clicked, what to revisit.
 
 ---
 
+### 2026-04-17 (continued)
+**Track:** Python — Core Language
+**Time spent:** —
+**What I did:**
+- Practiced generators and iterators: `yield`, generator expressions, memory vs list comprehension tradeoffs
+
+**What clicked:**
+- (add what clicked)
+
+**To revisit:**
+- (add anything to revisit)
+
+---
+
 ### 2026-04-18
 **Track:** SQL — StrataScratch Hard
 **Time spent:** —
