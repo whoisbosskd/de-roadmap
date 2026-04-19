@@ -98,3 +98,21 @@ Log each session here. Be brief — what you did, what clicked, what to revisit.
 **To revisit:**
 - Gaps-and-islands with NULLs or non-date sequences
 - Compare performance: `date - row_num` vs LAG-based gap detection
+
+---
+
+### 2026-04-19
+**Track:** SQL — StrataScratch Hard
+**Time spent:** —
+**What I did:**
+- Solved #10172 Best-Selling Item Per Month (online_retail)
+
+**What clicked:**
+- Top-N-per-group: aggregate first, then `ROW_NUMBER() OVER (PARTITION BY month ORDER BY total_paid DESC)`, filter `rn = 1`
+- Returns filter needs both `InvoiceNo NOT LIKE 'C%'` AND `quantity > 0` — cancellations have C-prefix, negative quantities are returns
+- `DISTINCT ON` works in vanilla Postgres but some graders reject it — `ROW_NUMBER()` is the portable fallback
+- ROW_NUMBER vs RANK: ROW_NUMBER picks one on ties arbitrarily; RANK surfaces all tied rows
+
+**To revisit:**
+- When to use RANK/DENSE_RANK instead of ROW_NUMBER for top-N
+- Partial indexes with WHERE clauses for filtered aggregations
