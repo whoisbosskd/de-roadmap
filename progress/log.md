@@ -116,3 +116,19 @@ Log each session here. Be brief — what you did, what clicked, what to revisit.
 **To revisit:**
 - When to use RANK/DENSE_RANK instead of ROW_NUMBER for top-N
 - Partial indexes with WHERE clauses for filtered aggregations
+
+---
+
+### 2026-04-20
+**Track:** SQL — StrataScratch Hard
+**Time spent:** —
+**What I did:**
+- Solved #2007 Comparing December and January Ranks (fb_comments_count + fb_active_users)
+
+**What clicked:**
+- DENSE_RANK vs RANK: spec said "next rank +1 without skipping" → DENSE_RANK, not RANK
+- Self-join the ranked CTE on country to align Jan row with Dec row — then filter `j.rnk < d.rnk` for improvement
+- Smaller rank number = better position, so "improved" means Jan rnk < Dec rnk
+
+**To revisit:**
+- LAG over month partition as an alternative to self-join for period-over-period comparison
