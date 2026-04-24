@@ -132,3 +132,23 @@ Log each session here. Be brief — what you did, what clicked, what to revisit.
 
 **To revisit:**
 - LAG over month partition as an alternative to self-join for period-over-period comparison
+
+---
+
+### 2026-04-24
+**Track:** SQL — StrataScratch Hard
+**Time spent:** —
+**What I did:**
+- Solved #10314 3-month rolling average of monthly revenue (amazon_purchases)
+
+**What clicked:**
+- Window frame `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW` gives a true trailing 3-month window; first two rows auto-average fewer rows (as spec allows)
+- Filter returns (`purchase_amt > 0`) BEFORE aggregation — otherwise negative returns silently cancel revenue
+- DATE_TRUNC vs TO_CHAR for ordering: DATE_TRUNC returns timestamp (numeric compare → always chronological); TO_CHAR returns text (lexicographic compare)
+  - 'YYYY-MM' with zero-padded months happens to sort correctly because every position has fixed width
+  - But 'YYYY-M' breaks: '2020-10' < '2020-2' because text compares char-by-char and '1' < '2'
+  - 'Mon YYYY' breaks alphabetically: 'Apr' < 'Feb'
+  - Rule: `ORDER BY` the underlying date column; TO_CHAR only in SELECT
+
+**To revisit:**
+- RANGE BETWEEN INTERVAL '2 months' PRECEDING — true calendar-based window vs row-based
